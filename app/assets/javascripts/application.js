@@ -11,6 +11,6 @@
 // about supported directives.
 //
 //= require rails-ujs
-//= require activestorage
-//= require turbolinks
 //= require_tree .
+
+@import "bootstrap/scss/bootstrap"; // picks it up in node_modules!
