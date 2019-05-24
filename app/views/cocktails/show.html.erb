@@ -1,1 +1,11 @@
-show.html.erb
+
+<div class="info align-items-center justify-content-left">
+  <div class="cocktail-img"></div>
+  <div class="cocktail-ingredients">
+    <% @cocktail.ingredients.each do |ingredient| %>
+      <ul>
+        <li><%= @cocktail.doses.select { |dose| dose.ingredient == ingredient}.first.description %> of <%= ingredient.name %></li>
+      </ul>
+    <% end %>
+  </div>
+</div>

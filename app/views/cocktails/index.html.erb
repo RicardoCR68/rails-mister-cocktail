@@ -1,0 +1,13 @@
+<div class="row mt-3">
+  <% @cocktails.each do |cktl| %>
+    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+      <%= link_to cocktail_path(cktl) do %>
+        <div class="card mb-3 bg-light shadow-sm bg-white rounded">
+          <div class="card-body">
+            <%= cktl.name %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
