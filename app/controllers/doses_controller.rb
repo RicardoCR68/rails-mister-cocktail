@@ -1,9 +1,9 @@
 class DosesController < ApplicationController
-  before_action :set_dose, only: %i[show destroy]
-  before_action :set_cocktail, only: %i[index new create]
+  before_action :set_dose
+  before_action :set_cocktail, except: %i[destroy]
 
   def index
-    @doses = @cocktail.doses
+    @doses = Dose.all.where(cocktail: @cocktail)
   end
 
   def new
@@ -21,22 +21,11 @@ class DosesController < ApplicationController
     end
   end
 
-  def show; end
-
-  def edit; end
-
-  def update
-    if @dose.update(dose_params)
-      redirect_to dose_path
-    else
-      render :edit
-    end
-  end
-
   def destroy
+    @cocktail = @dose.cocktail
     @dose.destroy
 
-    redirect_to cocktail_path
+    redirect_to cocktail_path(@cocktail)
   end
 
   private

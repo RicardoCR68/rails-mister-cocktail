@@ -1,8 +1,25 @@
-#info {
-  display: flex;
-  align-items: center;
-  justify-content: left;
+#individual {
+  // display: flex;
+  // justify-content: center;
+  text-align: center;
   background-color: white;
+  box-shadow: 5px 3px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 0.25rem;
+
+  #info {
+    display: flex;
+    // padding: 15px;
+    align-items: center;
+    justify-content: left;
+  }
+
+  .btn {
+    margin: 0.25rem;
+  }
+
+  a {
+  }
 
   ul {
     padding: 0;

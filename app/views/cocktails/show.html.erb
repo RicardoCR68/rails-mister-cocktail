@@ -1,18 +1,29 @@
 
-<div id="info">
-  <div class="cocktail-img">
-    placeholder
+<div id="individual">
+  <div id="name">
+    <h3><%= @cocktail.name %></h3>
   </div>
-  <div class="cocktail-ingredients">
-    <ul>
-      <% @cocktail.ingredients.each do |ingredient| %>
-        <li><%= @cocktail.doses.select { |dose| dose.ingredient == ingredient}.first.description %> of <%= ingredient.name %></li>
-      <% end %>
-    </ul>
-    <div class="d-flex justify-content-between align-items-center m-auto">
-      <span>Add a new dose</span>
-      <span>Edit existing dose</span>
-      <span>Remove a dose</span>
+  <div id="info">
+    <div class="cocktail-img m-2">
+      <%= image_tag("https://source.unsplash.com/random/250x350") %>
+    </div>
+    <div class="cocktail-ingredients h-350 w-100">
+      <ul>
+        <% @cocktail.ingredients.first(9).each do |ingredient| %>
+          <% dose = @cocktail.doses.select { |dose| dose.ingredient == ingredient}.first %>
+          <li class="d-flex justify-content-between"><%= dose.description %> of <%= ingredient.name %>
+            <%= link_to dose_path(dose), method: :delete do %>
+              <i class="fas fa-trash"></i>
+            <% end %>
+          </li>
+        <% end %>
+        <% if @cocktail.doses.count >= 10 %>
+          <%= link_to "...", cocktail_doses_path(@cocktail) %>
+        <% end %>
+      </ul>
+      <div>
+        <%= link_to "Add a Dose", new_cocktail_dose_path(@cocktail), class: "btn btn-success w-100 m-0" %>
+      </div>
     </div>
   </div>
 </div>
