@@ -1,16 +1,18 @@
 
-<div class="align-items-center justify-content-left" id="info">
-  <div class="cocktail-img"></div>
+<div id="info">
+  <div class="cocktail-img">
+    placeholder
+  </div>
   <div class="cocktail-ingredients">
     <ul>
       <% @cocktail.ingredients.each do |ingredient| %>
         <li><%= @cocktail.doses.select { |dose| dose.ingredient == ingredient}.first.description %> of <%= ingredient.name %></li>
       <% end %>
     </ul>
-    <div class="justify-content-between align-items-center">
-      <p>Add a new dose</p>
-      <p>Edit existing dose</p>
-      <p>Remove a dose</p>
+    <div class="d-flex justify-content-between align-items-center m-auto">
+      <span>Add a new dose</span>
+      <span>Edit existing dose</span>
+      <span>Remove a dose</span>
     </div>
   </div>
 </div>

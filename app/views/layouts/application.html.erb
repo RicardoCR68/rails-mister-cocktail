@@ -11,13 +11,15 @@
   </head>
 
   <body>
-    <div class="navbar bg-white">
+    <div class="navbar bg-white mb-2">
       <%= link_to "Cocktails Master", cocktails_path %>
     </div>
     <div class="container">
       <%= yield %>
     </div>
-    <%= javascript_include_tag "application" %>
-    <%= javascript_pack_tag "application" %>
+    <div id="scripts">
+      <%= javascript_include_tag "application" %>
+      <%= javascript_pack_tag "application" %>
+    </div>
   </body>
 </html>
