@@ -1,5 +1,5 @@
 class DosesController < ApplicationController
-  before_action :set_dose
+  before_action :set_dose, except: %i[index]
   before_action :set_cocktail, except: %i[destroy]
 
   def index

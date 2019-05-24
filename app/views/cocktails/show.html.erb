@@ -5,9 +5,9 @@
   </div>
   <div id="info">
     <div class="cocktail-img m-2">
-      <%= image_tag("https://source.unsplash.com/random/250x350") %>
+      <%= image_tag("https://source.unsplash.com/random?#{@cocktail.name}", class: "cover") %>
     </div>
-    <div class="cocktail-ingredients h-350 w-100">
+    <div class="cocktail-ingredients w-100">
       <ul>
         <% @cocktail.ingredients.first(9).each do |ingredient| %>
           <% dose = @cocktail.doses.select { |dose| dose.ingredient == ingredient}.first %>
