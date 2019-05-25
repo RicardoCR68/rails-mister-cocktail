@@ -55,10 +55,12 @@ html_doc.search('.content-appear p').each_with_index do |ingredient_tag, ingredi
   ingredient_strings_arr = ingredient_tag.text.strip.split(/[\d+\/]+/)
   ingredient_strings_arr.reject! { |string| string == ' ' }
   ingredient_strings_arr.reject! { |string| string == '' }
-  assholes = [' squeezed lemon', ' `', ' ml', ' ml ']
+  assholes = [' `', ' ml', ' ml ']
 
   ingredient_strings_arr.each do |ingredient_string|
     next if assholes.include? ingredient_string
+
+    ingredient_string.capitalize if ingredient_string == ' squeezed lemon'
 
     new_name = ingredient_search(ingredient_string)
     new_ingredient = Ingredient.new(name: new_name)
