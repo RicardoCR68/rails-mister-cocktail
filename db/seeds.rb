@@ -56,6 +56,7 @@ html_doc.search('.content-appear p').each_with_index do |ingredient_tag, ingredi
   ingredient_strings_arr.reject! { |string| string == ' ' }
   ingredient_strings_arr.reject! { |string| string == '' }
   assholes = [' squeezed lemon', ' `', ' ml', ' ml ']
+
   ingredient_strings_arr.each do |ingredient_string|
     next if assholes.include? ingredient_string
 
@@ -66,7 +67,7 @@ html_doc.search('.content-appear p').each_with_index do |ingredient_tag, ingredi
     else
       puts '---------------------- Something went wrong --------------------'
       puts "                    #{new_ingredient.name}                    "
-      puts "                    #{new_ingredient.errors.messages}                    "
+      puts "               #{new_ingredient.errors.messages}               "
     end
   end
 end

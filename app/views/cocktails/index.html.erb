@@ -3,6 +3,9 @@
     <div class="col-lg-2 col-md-3 col-sm-4 col-12">
       <%= link_to cocktail_path(cktl) do %>
         <div class="card my-4 bg-light shadow-sm bg-white rounded">
+          <div class="card-img-top">
+            <%= image_tag("https://source.unsplash.com/random?#{cktl.name}", style: "ojject-fit: cover; height: 150px;", class: "card-img-top") %>
+          </div>
           <div class="card-body">
             <%= cktl.name %>
           </div>
