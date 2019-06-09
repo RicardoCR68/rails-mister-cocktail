@@ -1,13 +1,26 @@
 # AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA PORRA
 def ingredient_search(full_ingredient_string)
-  arr = full_ingredient_string.split(' ')
+  arr = full_ingredient_string.text.split(' ')
 
   alpha = ('A'..'Z').to_a
+
+  conditionals!(arr)
 
   arr.shift until alpha.include? arr.first[0]
   arr.join(' ')
 end
 
+def conditionals!(arr)
+  # p arr
+
+  arr[1] = arr[1].capitalize if arr[1] == 'squeezed'
+  arr[0] = arr[0].capitalize if arr[0] == 'salt' || arr[0] == 'flamed'
+  arr[2] = 'Ketchup' if arr.last == 'ml'
+
+  arr
+end
+
+system 'clear'
 puts 'Cleaning records'
 
 Cocktail.destroy_all
@@ -41,7 +54,7 @@ html_doc.search('.recipe_summary h3').each do |cocktail|
   else
     puts '---------------------- Something went wrong --------------------'
     puts "                    #{new_cocktail.name}                    "
-    puts "                    #{new_cocktail.errors.messages}                    "
+    puts "                    #{new_cocktail.errors.messages}              \n\n"
   end
 end
 
@@ -50,15 +63,20 @@ puts '-' * 100
 puts 'And Now for the Ingredients:'
 
 html_doc.search('.content-appear p').each_with_index do |ingredient_tag, ingredient_index|
-  next unless ingredient_index.even?
+  next if ingredient_index.odd?
 
-  ingredient_strings_arr = ingredient_tag.text.strip.split(/[\d+\/]+/)
-  ingredient_strings_arr.reject! { |string| string == ' ' }
-  ingredient_strings_arr.reject! { |string| string == '' }
+  # ingredient_tag.children.each_with_index { |s, i| puts "#{i}: #{s}" }
+  # raise
+
+  # ingredient_strings_arr = ingredient_tag.text.strip.split(/[\d+\/]+/)
+  # ingredient_strings_arr.reject! { |string| string == ' ' }
+  # ingredient_strings_arr.reject! { |string| string == '' }
   assholes = [' `', ' ml', ' ml ']
 
-  ingredient_strings_arr.each do |ingredient_string|
-    next if assholes.include? ingredient_string
+  ingredient_strings_arr = ingredient_tag.children
+
+  ingredient_strings_arr.each_with_index do |ingredient_string, i|
+    next if assholes.include?(ingredient_string) || i.odd?
 
     ingredient_string.capitalize if ingredient_string == ' squeezed lemon'
 
@@ -69,28 +87,27 @@ html_doc.search('.content-appear p').each_with_index do |ingredient_tag, ingredi
     else
       puts '---------------------- Something went wrong --------------------'
       puts "                    #{new_ingredient.name}                    "
-      puts "               #{new_ingredient.errors.messages}               "
+      puts "               #{new_ingredient.errors.messages}               \n\n"
     end
   end
 end
 
 puts '-' * 100
 
-puts 'Generating Random Doses'
+puts 'Generating 12 Random Doses for each Cocktail'
 
 Cocktail.all.each do |cocktail|
+  measures = [
+    'cups',
+    'oz',
+    'tea spoons',
+    '1/2 cup',
+    '1/4 cup',
+    'ml',
+    'slices',
+    'pieces'
+  ]
   12.times do
-    measures = [
-      'cups',
-      'oz',
-      'tea spoons',
-      'soup spoons',
-      '1/2 cup',
-      '1/4 cup',
-      'ml',
-      'slices',
-      'pieces'
-    ]
     ammount = "#{rand(1..8)} #{measures.sample}"
     dose = Dose.new(
       cocktail: cocktail,
@@ -102,7 +119,8 @@ Cocktail.all.each do |cocktail|
       puts "#{Dose.count}: #{dose.cocktail.name} - #{dose.description} of #{dose.ingredient.name}"
     else
       puts '---------------------- Something went wrong --------------------'
-      puts "                    #{dose.errors.messages}                    "
+      puts "                    #{dose.ingredient}                    "
+      puts "                    #{dose.errors.messages}                    \n\n"
     end
   end
 end
